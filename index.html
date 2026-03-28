@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raj Kumar Dutta</title>
+    <link rel=icon href="r.svg">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+    <script src="https://kit.fontawesome.com/3f8256dd02.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <style>
+        /* --- APPLE PRELOADER STYLES --- */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000000; /* Solid Black */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease-out;
+        }
+        
+        .preloader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .preloader-text {
+            font-size: 50px;
+            font-weight: 500;
+            color: #ffffff; /* White Text */
+            letter-spacing: 2px;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            animation: fadeInOut 0.3s ease-in-out;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.1); }
+        }
+
+        /* --- CHECKERBOARD THEME --- */
+        body {
+            background-color: #0a0e27; /* Fallback */
+            background-image: 
+                linear-gradient(rgba(255, 51, 51, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 51, 51, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            color: white;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        
+        /* Dark mode specific adjustment for grid */
+        #about.dark, #skills.dark, #hire.dark, #gallery.dark, #FOOTER.dark, #education.dark2, #services.dark2, #projects.dark2, #contact.dark2 {
+            background-color: transparent !important;
+            background-image: none !important;
+        }
+        
+        /* Text visibility */
+        p, h1, h2, h3, h4, h5, h6 {
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        /* Nav & Footer Tweaks */
+        .navbar { backdrop-filter: blur(10px); }
+        
+        /* Red Scrollbar */
+        html::-webkit-scrollbar { width: 0.6vw; }
+        html::-webkit-scrollbar-thumb { background-color: #ff3333 !important; border-radius: 10px; }
+        html::-webkit-scrollbar-track { background-color: #cbcbcb; }
+
+        .nav-item a:hover { color: #ff3333 !important; }
+        span { color: #ff3333 !important; }
+        .fa-solid, .fa-brands, .fa-regular { color: #ff3333 !important; }
+        .progress-bar { background-color: #ff3333 !important; }
+
+        /* --- PROFILE PHOTO ALIGNMENT FIX --- */
+        .header-img {
+            width: 160px;
+            height: 160px; /* Ensure perfect circle */
+            border-radius: 50%;
+            border: 5px solid white;
+            display: block; /* Important for centering */
+            margin: 0 auto; /* Centers the image horizontally */
+            object-fit: cover;
+        }
+
+        /* Other Existing Styles (Preserved) */
+        .navbar-brand { font-size: 22px !important; font-weight: 700; letter-spacing: 3px; color: inherit !important; }
+        .navbar.scrolled { background: rgba(48, 47, 47, 0.3); color: black; backdrop-filter: blur(8px); }
+        .nav-item a { font-weight: 600; padding: 0px 25px !important; color: inherit !important; font-size: 13px !important; float: right; }
+        
+        /* Intro Background */
+        .intro {
+            height: 100vh;
+            background-image: url(https://images.unsplash.com/photo-1506452305024-9d3f02d1c9b5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80);
+            background-repeat: no-repeat; background-size: cover; opacity: 100%; z-index: -1; background-position: bottom;
+        }
+
+        /* Arrow Animation */
+        .fa-angle-down { color: rgb(255, 255, 255); opacity: 0.8; animation: slide 0.9s ease-in-out infinite; }
+        @keyframes slide { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(0px, 10px); } }
+
+        /* General Sections */
+        section { padding-top: 60px; padding-bottom: 60px; }
+        .img-about { aspect-ratio: 1; width: 75%; border-radius: 10px; }
+        
+        /* Cards & Grids */
+        .edc .col-md-4, .srvc { padding: 20px; transition: 0.3s; }
+        .edc .col-md-4:hover, .srvc:hover { transform: translateY(-5px); background: rgba(255,255,255,0.1); border-radius: 10px; }
+        
+        .skill { flex: 0 0 12%; margin: 8px; padding: 8px 10px; background-color: #f0f0f0; border-radius: 6px; border: 1px solid #ddd; text-align: center; font-size: 14px; color: #333; display: inline-block; }
+        
+        .prjct { background-color: black; position: relative; z-index: 1; aspect-ratio: 1000/620; display: flex; justify-content: center; align-items: center; padding: 20px; border: 2px solid gray; cursor: pointer; border-radius: 10px; }
+        .prjct img { position: absolute; height: 100%; width: 100%; top: 0; left: 0; object-fit: cover; z-index: -1; }
+        .prjct .child { width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); color: white; backdrop-filter: blur(9px); display: flex; flex-direction: column; justify-content: center; align-items: center; scale: 0; transition: 0.4s ease-in-out; opacity: 0; }
+        .prjct:hover .child { scale: 1; opacity: 1; }
+        .prjct .child a { text-decoration: none; color: white; font-weight: 600; }
+        .prjct .child a:hover { color: #ff3333; scale: 1.05; transition: 0.2s; }
+
+        /* Gallery */
+        .gallery { white-space: nowrap; overflow-x: scroll; overflow-y: hidden; scroll-behavior: smooth; transition: 0.5s; padding-bottom: 15px; }
+        .gallery img { width: 60%; margin-right: 10px; border-radius: 5px; }
+        .gallery::-webkit-scrollbar { height: 8px !important; }
+        .gallery::-webkit-scrollbar-thumb { background-color: #ff3333; border-radius: 10px; }
+
+        /* Dark Mode Classes (Preserved) */
+        .dark { background-color: #272a2d !important; color: white !important; }
+        .dark2 { background-color: rgb(46, 46, 48) !important; color: white !important; }
+        #navbar.dark { color: white !important; }
+        
+        /* Mobile Responsive */
+        @media only screen and (max-width: 996px) {
+            .nav-item a { padding: 7px !important; }
+            .img-about { width: 90% !important; }
+            .navbar { backdrop-filter: blur(3px); }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="preloader" id="preloader">
+        <h2 class="preloader-text" id="preloaderText">Hello</h2>
+    </section>
+
+    <section id="home" class="intro">
+        <nav class="navbar navbar-expand-lg fixed-top" id="navbar">
+            <div class="container">
+                <a class="navbar-brand" href="#">RAJ<span style="color: #ff3333; font-size: 25px;">.</span></a>
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars" style="color: white;"></i>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item"><a class="nav-link active" href="#home">HOME</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about">ABOUT</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#services">SERVICES</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#projects">PROJECTS</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#gallery">VLOG</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">CONTACT</a></li>
+                    </ul>
+                    <div class="d-flex justify-content-end ps-4">
+                        <button class="bg-transparent p-0 ms-2 border-0 theme" onclick="changeTheme()">
+                            <i class="fas fa-moon fa-xl text-white"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="container d-flex justify-content-center py-3" style="height: 100vh; align-items: center;">
+            <div class="row text-center w-100">
+                <div class="col-12">
+                    <img src="Profile Photo.jpeg" class="header-img" alt="Raj Kumar Dutta">
+                    
+                    <h1 style="color: white; letter-spacing: 4px;" class="pt-5 h1-head">Hi, I'm Raj Kumar Dutta</h1>
+                    <h6 style="color: rgb(190, 190, 190); letter-spacing: 3px;" class="pb-5 multiple-text h6-head"></h6>
+                    <i class="pt-5 fa-solid fa-angle-down fa-2x"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <div class="row gy-3 d-flex align-items-center">
+                <div class="col-lg-6 col description-about">
+                    <h2 class="pb-3 ">Hello, I'm Raj Kumar Dutta</h2>
+                    <h6 class="pb-2 " style="letter-spacing: 3px;">Data Scientist <span style="color: #ff3333; font-size: 30px;">.</span> Web Developer <span style="color: #ff3333; font-size: 30px;">.</span> CSE Student</h6>
+                    <p>I am a 3rd-year B.Tech CSE student passionate about Data Science and Web Development. Skilled in Python, MongoDB, Pandas, NumPy, and SQL, I love building data-driven projects. My journey is all about solving real-world problems through code and continuous learning...</p>
+                    <div>
+                        <div class="row gx-5">
+                            <div class="col-1"><a href="https://www.linkedin.com/in/raj-kumar-dutta-3349a0276/" target="_blank" style="color: inherit;"><i class="fa-brands fa-linkedin-in"></i></a></div>
+                            <div class="col-1"><a href="https://github.com/raj-kumar-dutta" target="_blank" style="color: inherit;"><i class="fa-brands fa-github "></i></a></div>
+                            <div class="col-1"><a href="https://www.instagram.com/rajkumar__dutta_/?hl=en" target="_blank" style="color: inherit;"><i class="fa-brands fa-instagram "></i></a></div>
+                            <div class="col-1"><a href="https://www.facebook.com/rajkumar.dutta.73550" target="_blank" style="color: inherit;"><i class="fa-brands fa-facebook-f "></i></a></div>
+                            <div class="col-1"><a href="https://x.com/RajKuma16617301" target="_blank" style="color: inherit;"><i class="fa-brands fa-twitter"></i></a></div>
+                        </div>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1yP_qpVqyST8aielEtOTh5ErCmxvLDSDV/view?usp=drive_link" target="_blank"><button class="btn btn-dark border-light mt-4 px-4 py-2 rounded-1"><i class="fa-regular fa-file pe-2"></i>Resume</button></a>
+                </div>
+                <div class="col-lg-6 col-12 d-flex justify-content-center">
+                    <img src="about photo.jpeg" class="img-about" alt="About Image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="education-title">Education<span style="color: #ff3333; font-size: 40px;">.</span></h2>
+                </div>
+                <br><br><br><br>
+                <div class="col-md-12">
+                    <div class="row edc">
+                        <div class="col-md-4 col-sm-6 ">
+                            <i class="fa-solid fa-user-graduate fa-xl" style="color: #ff3333;"></i>
+                            <h5 class="pt-4 pb-2">B.Tech CSE</h5>
+                            <h6>Swami Vivekananda Institute of Science & Technology</h6>
+                            <p>2023 - 2027 | Kolkata</p>
+                            <hr style="width: 50%;" class="mb-5">
+                        </div>
+                        <div class="col-md-4 col-sm-6 ">
+                            <i class="fa fa-school fa-xl" style="color: #ff3333;"></i>
+                            <h5 class="pt-4 pb-2">Higher Secondary</h5>
+                            <h6>West Bengal Council of HS Education</h6>
+                            <p>Completed | West Bengal</p>
+                            <hr style="width: 50%;" class="mb-5">
+                        </div>
+                        <div class="col-md-4 col-sm-6 ">
+                            <i class="fa-solid fa-pencil fa-xl" style="color: #ff3333;"></i>
+                            <h5 class="pt-4 pb-2">Secondary</h5>
+                            <h6>West Bengal Board of Secondary Education</h6>
+                            <p>Completed | West Bengal</p>
+                            <hr style="width: 50%;" class="mb-5">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col">
+                    <h2 class="skills-title">Skills<span style="color: #ff3333; font-size: 40px;">.</span></h2>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <div class="container">
+            <div class="row d-flex align-items-center justify-content-center">
+                <div class="col-12 d-flex flex-wrap align-items-center justify-content-center">
+                    <div class="skill">Python</div>
+                    <div class="skill">Java</div>
+                    <div class="skill">C</div>
+                    <div class="skill">Pandas</div>
+                    <div class="skill">NumPy</div>
+                    <div class="skill">Matplotlib</div>
+                    <div class="skill">Seaborn</div>
+                    <div class="skill">SQL</div>
+                    <div class="skill">MongoDB</div>
+                    <div class="skill">Git</div>
+                    <div class="skill">HTML</div>
+                    <div class="skill">CSS</div>
+                    <div class="skill">Machine Learning</div>
+                    <div class="skill">Data Analysis</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="service-title">Services<span style="color: #ff3333; font-size: 40px;">.</span></h2>
+                </div>
+                <br><br><br><br>
+                <div class="col-md-12">
+                    <div class="row ">
+                        <div class="col-md-4 col-sm-6 srvc">
+                            <i class="fa-solid fa-chart-line fa-xl" style="color: #ff3333;"></i>
+                            <h5 class="pt-4 pb-2">Data Analysis</h5>
+                            <p class="mb-5">Transforming raw data into actionable insights using Python, Pandas, and visualization tools to drive decision-making.</p>
+                        </div>
+                        <div class="col-md-4 col-sm-6 srvc">
+                            <i class="fa fa-code fa-xl" style="color: #ff3333;"></i>
+                            <h5 class="pt-4 pb-2">Web Development</h5>
+                            <p class="mb-5">Building responsive websites and web applications with a focus on functionality and user experience.</p>
+                        </div>
+                        <div class="col-md-4 col-sm-6 srvc">
+                            <i class="fa-solid fa-brain fa-xl" style="color: #ff3333;"></i>
+                            <h5 class="pt-4 pb-2">Machine Learning</h5>
+                            <p class="mb-5">Developing predictive models and algorithms to solve complex problems using modern ML techniques.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="hire">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-6 col-md-6 col-sm-6">
+                    <h2 class="mb-4 hire-title">Hire Me<span style="color: #ff3333; font-size: 40px;">.</span></h2>
+                    <p class="hire-description">With a strong foundation in Computer Science and expertise in Data Science and Web Development, I am ready to contribute to innovative projects. Let's create something impactful together.</p>
+                </div>
+                <div class="col-12 col-lg-6 col-md-6 col-sm-6 d-flex justify-content-end align-items-center description-hire-button">
+                    <a href="#contact"><button class="btn btn-dark border-light rounded-1"><i class="fa-regular fa-handshake pe-2 fa-xl"></i> Get in Touch</button></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col">
+                    <h2 class="project-title">Projects<span style="color: #ff3333; font-size: 40px;">.</span></h2>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-11 col-md-5 prjct m-3">
+                    <img src="project 1 .png" class="img-fluid" alt="ML Project">
+                    <div class="child">
+                        <h5>💳 Credit Card Fraud Detection</h5>
+                        <a href="https://github.com/raj-kumar-dutta/Ardent_ML_Internship/tree/main/Project-6" target="_blank"><p>View Project <i class="fa-solid fa-arrow-up-right-from-square"></i></p></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-11 col-md-5 prjct m-3">
+                    <img src="project 2.png" class="img-responsive" alt="Spam Detection">
+                    <div class="child">
+                        <h5>🎯 Customer Segmentation </h5>
+                        <a href="https://github.com/raj-kumar-dutta/Ardent_ML_Internship/tree/main/Project-3" target="_blank"><p>View Project <i class="fa-solid fa-arrow-up-right-from-square"></i></p></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-11 col-md-5 prjct m-3">
+                    <img src="project 3.png" class="img-fluid" alt="Weather App">
+                    <div class="child">
+                        <h5>📊 Financial Loan Analysis</h5>
+                        <a href="https://github.com/raj-kumar-dutta/Loan-Analysis" target="_blank"><p>View Project <i class="fa-solid fa-arrow-up-right-from-square"></i></p></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-11 col-md-5 prjct m-3">
+                    <img src="project 4.png" class="img-responsive" alt="Iris Classifier">
+                    <div class="child">
+                        <h5>🩺 Breast Cancer Detection</h5>
+                        <a href="https://github.com/raj-kumar-dutta/Ardent_ML_Internship/tree/main/Project-2" target="_blank"><p>View Project <i class="fa-solid fa-arrow-up-right-from-square"></i></p></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <div class="container mt-2">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-lg-6 col-12">
+                    <h1 class="gallery-title mb-3">VLOG<span style="color: #ff3333; font-size: 40px;">.</span></h1>
+                    <h6 class="gallery-about" style="letter-spacing: 4px;">From Local Environments To the Great Outdoors...</h6>
+                </div>
+                <div class="col-lg-6 col-12 gallery-img">
+                    <div class="gallery horizontal-gallery img-fluid">
+                        <img class="work-modals img-fluid" src="gal 1.jpeg">
+                        <img class="work-modals img-fluid" src="gal 2.jpg.jpeg">
+                        <img class="work-modals img-fluid potrait" src="gal 3.jpg.jpeg">
+                        <img class="work-modals img-fluid" src="gal 4.jpg.jpeg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h2 class="contact-title">Contact Me<span style="color: #ff3333; font-size: 40px;">.</span></h2>
+                </div>
+                <br><br><br>
+                <div class="container">
+                    <div class="row text-center d-flex justify-content-center align-items-center">
+                        <div class="col-lg-3"><i class="fa fa-phone fa-lg" style="color: #ff3333;"></i><p>+91 8172086288</p></div>
+                        <div class="col-lg-3 px-5"><i class="fa fa-map-marker fa-lg" style="color: #ff3333;"></i><p>West Bengal, India</p></div>
+                        <div class="col-lg-3"><i class="fa fa-envelope fa-lg" style="color: #ff3333;"></i><p>rajkumardutya@gmail.com</p></div>
+                    </div>
+                </div>
+                <br><br><br><br><br>
+                <div class="col-md-8 col-md-offset-2 container">
+                    <div id="contact-form">
+                        <div class="row text-center d-flex justify-content-center">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group name">
+                                    <input type="text" class="form-control rounded-1" placeholder="Enter Your Name" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group email">
+                                    <input type="email" class="form-control rounded-1" placeholder="Enter Your Email" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group text">
+                            <textarea class="form-control rounded-1" rows="4" placeholder="Message..." required></textarea>
+                        </div>
+                        <br>
+                        <div class="col-md-12 col-xs-12 text">
+                            <button class="btn btn-dark border-light rounded-1 py-2"><i class="fa-regular fa-paper-plane pe-2"></i> Send Message</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="FOOTER">
+        <br>
+        <footer id="footer">
+            <div class="container justify-content-center d-flex">
+                <div class="row text-center d-flex justify-content-center align-items-center">
+                    <div class="col-1 px-3"><a href="https://www.linkedin.com/in/raj-kumar-dutta-3349a0276/" target="_blank" style="color: inherit;"><i class="fa-brands fa-linkedin-in"></i></a></div>
+                    <div class="col-1 px-3"><a href="https://github.com/raj-kumar-dutta" target="_blank" style="color: inherit;"><i class="fa-brands fa-github"></i></a></div>
+                    <div class="col-1 px-3"><a href="https://www.instagram.com/rajkumar__dutta_/?hl=en" target="_blank" style="color: inherit;"><i class="fa-brands fa-instagram"></i></a></div>
+                    <div class="col-1 px-3"><a href="https://www.facebook.com/rajkumar.dutta.73550" target="_blank" style="color: inherit;"><i class="fa-brands fa-facebook-f"></i></a></div>
+                    <div class="col-1 px-3"><a href="https://x.com/RajKuma16617301" target="_blank" style="color: inherit;"><i class="fa-brands fa-twitter"></i></a></div>
+                    <br>
+                    <p class="py-2"><span style="color: #ff3333; font-weight: bold; opacity: 0.5;">©</span> 2026 <span style="letter-spacing: 2px; font-weight: 600;">RAJ</span><span style="color: #ff3333; font-size: 30px;">.</span></p>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    
+    <script>
+        // --- APPLE-STYLE PRELOADER LOGIC ---
+        const hellos = ['👋 Hello', '👋 নমস্কার', '👋 Hola', '👋 Bonjour', '👋 Ciao', '👋 Namaste', '👋 Olá'];
+        let langIndex = 0;
+        const preloaderText = document.getElementById('preloaderText');
+        const preloader = document.getElementById('preloader');
+
+        function updateLanguage() {
+            preloaderText.textContent = hellos[langIndex];
+            langIndex++;
+            if (langIndex < hellos.length) {
+                setTimeout(updateLanguage, 250); // Speed of language change
+            } else {
+                setTimeout(() => { preloader.classList.add('hidden'); }, 300);
+            }
+        }
+        updateLanguage();
+
+        // --- TYPING TEXT ---
+        const text = document.querySelector(".multiple-text");
+        const textLoad = () => {
+            setTimeout(() => { text.textContent = "Data Scientist"; }, 0);
+            setTimeout(() => { text.textContent = "Web Developer"; }, 1500);
+            setTimeout(() => { text.textContent = "Programmer"; }, 3100);
+        };
+        textLoad();
+        setInterval(textLoad, 4600);
+
+        // --- NAVBAR SCROLL ---
+        var navbar = document.getElementById("navbar");
+        document.addEventListener("scroll", () => {
+            if (window.scrollY > 0) { navbar.classList.add("scrolled"); } 
+            else { navbar.classList.remove("scrolled"); }
+        });
+
+        // --- SCROLL REVEAL ---
+        ScrollReveal({ reset: true, distance: "95px", duration: 1500, delay: 250, viewFactor: 0.15 });
+        ScrollReveal().reveal(".project-title,.service-title,.description-about,.skills-title,.contact-title,.gallery-title,.education-title,hr,.hire-title", { origin: "top" });
+        ScrollReveal().reveal(".img-about,.h6-head,.description-hire-button,.email,.gallery-img", { origin: "right" });
+        ScrollReveal().reveal(".srvc,.text,.edc", { origin: "bottom" });
+        ScrollReveal().reveal(".h1-head,.hire-description,.name,.gallery-about", { origin: "left" });
+        ScrollReveal().reveal(".header-img", { scale: 1.7 });
+        ScrollReveal().reveal(".prjct", { scale: 0.5, duration: 1500, interval: 200 });
+        ScrollReveal().reveal(".fa-brands", { origin: "bottom", delay: 500, interval: 150, distance: "35px" });
+
+        // --- THEME TOGGLE (Preserved logic) ---
+        var about = document.querySelector("#about");
+        var skills = document.querySelector("#skills");
+        var hire = document.querySelector("#hire");
+        var gallery = document.querySelector("#gallery");
+        var footer = document.querySelector("#FOOTER");
+        var education = document.querySelector("#education");
+        var services = document.querySelector("#services");
+        var projects = document.querySelector("#projects");
+        var contact = document.querySelector("#contact");
+        var icn = document.querySelector(".fa-moon");
+
+        function changeTheme() {
+            navbar.classList.toggle("dark");
+            about.classList.toggle("dark");
+            skills.classList.toggle("dark");
+            hire.classList.toggle("dark");
+            gallery.classList.toggle("dark");
+            footer.classList.toggle("dark");
+            education.classList.toggle("dark2");
+            services.classList.toggle("dark2");
+            projects.classList.toggle("dark2");
+            contact.classList.toggle("dark2");
+
+            if (icn.classList.contains("fa-moon")) {
+                icn.classList.replace("fa-moon", "fa-sun");
+            } else {
+                icn.classList.replace("fa-sun", "fa-moon");
+            }
+        }
+    </script>
+
+</body>
+</html>
