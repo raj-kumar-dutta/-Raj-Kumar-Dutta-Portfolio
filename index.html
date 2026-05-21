@@ -408,27 +408,36 @@
                 </div>
                 <br><br><br><br><br>
                 <div class="col-md-8 col-md-offset-2 container">
-                    <div id="contact-form">
+                    <!-- এখানে <div> এর বদলে <form> ট্যাগ অ্যাড করা হয়েছে এবং Web3Forms API লিংক করা হয়েছে -->
+                    <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+                        
+                        <!-- আপনার Web3Forms Access Key এখানে বসাবেন -->
+                        <input type="hidden" name="access_key" value="7f14a3b8-68cb-4b8d-bc0c-9068b73fa937">
+                        
                         <div class="row text-center d-flex justify-content-center">
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group name">
-                                    <input type="text" class="form-control rounded-1" placeholder="Enter Your Name" required>
+                                    <!-- name="name" যুক্ত করা হয়েছে -->
+                                    <input type="text" name="name" class="form-control rounded-1" placeholder="Enter Your Name" required>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group email">
-                                    <input type="email" class="form-control rounded-1" placeholder="Enter Your Email" required>
+                                    <!-- name="email" যুক্ত করা হয়েছে -->
+                                    <input type="email" name="email" class="form-control rounded-1" placeholder="Enter Your Email" required>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group text">
-                            <textarea class="form-control rounded-1" rows="4" placeholder="Message..." required></textarea>
+                            <!-- name="message" যুক্ত করা হয়েছে -->
+                            <textarea name="message" class="form-control rounded-1" rows="4" placeholder="Message..." required></textarea>
                         </div>
                         <br>
                         <div class="col-md-12 col-xs-12 text">
-                            <button class="btn btn-dark border-light rounded-1 py-2"><i class="fa-regular fa-paper-plane pe-2"></i> Send Message</button>
+                            <!-- বাটনটি টাইপ সাবমিট করা হয়েছে যাতে ক্লিক করলে ফর্ম সাবমিট হয় -->
+                            <button type="submit" class="btn btn-dark border-light rounded-1 py-2"><i class="fa-regular fa-paper-plane pe-2"></i> Send Message</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
